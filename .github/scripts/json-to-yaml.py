@@ -2,6 +2,7 @@ import os
 import json
 import yaml
 
+
 def json_to_yaml(subdir, file):
     obj = None
 
@@ -17,7 +18,6 @@ def json_to_yaml(subdir, file):
 
 
 if __name__ == "__main__":
-
     for subdir, dirs, files in os.walk("./apps"):
         for f in files:
             if f != "metadata.json":

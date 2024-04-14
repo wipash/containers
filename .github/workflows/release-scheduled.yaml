@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Scheduled Release
 
 concurrency:
@@ -18,8 +19,8 @@ on:
         type: boolean
         default: false
         required: true
- # schedule:
-  #  - cron: "0 * * * *"
+  schedule:
+    - cron: "0 * * * *"
 
 jobs:
   simple-checks:
