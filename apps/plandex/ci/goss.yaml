@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/goss-org/goss/master/docs/schema.yaml
+# process:
+#   plandex-server:
+#     running: true
+file:
+  /app/plandex-server:
+    exists: true
+# port:
+#   tcp6:8080:
+#     listening: true
+# http:
+#   http://localhost:8080/health:
+#     status: 200
