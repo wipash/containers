@@ -15,8 +15,9 @@ RUN curl -fsSL "https://github.com/plandex-ai/plandex/archive/refs/tags/server/v
     go mod download && \
     cd /tmp/app/server && \
     go mod download && \
-    mkdir -p /app/server && \
+    mkdir -p /app && \
     go build -o /app/plandex-server . && \
+    cp -r /tmp/app/server/migrations /app && \
     cd /app && \
     chown -R root:root /app && \
     chmod -R 755 /app && \
