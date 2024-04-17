@@ -13,12 +13,9 @@ ENV VITE_APP_PORTAL_URL=""
 ENV VITE_APP_DISABLE_TRACKING=true
 ENV VITE_APP_WS_SERVER_URL=http://localhost:3002
 
-RUN git clone https://github.com/excalidraw/excalidraw.git . && \
+RUN git clone "https://github.com/excalidraw/excalidraw.git" . && \
   if [ -n "$VERSION" ]; then \
-    # NUMBER_COMMITS_TO_REVERT=$(( $(git rev-list --count --first-parent HEAD) - $(echo "${VERSION}" | cut -d "." -f3) )); \
-    # git checkout "master~$NUMBER_COMMITS_TO_REVERT"; \
-    LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)); \
-    git checkout $LATEST_TAG; \
+    git checkout v$VERSION; \
   fi  && \
   sed -i 's|"excalidraw.production.min": "./entry.js",|"excalidraw.production.min": "../../excalidraw-app/index.ts",|g' ./src/packages/excalidraw/webpack.prod.config.js && \
   sed -i 's|simpleanalyticscdn.com|localhost|g'  ./index.html && \
