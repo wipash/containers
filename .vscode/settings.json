@@ -1,5 +1,5 @@
 {
-    "yaml.schemas": {
-        "https://json.schemastore.org/yamllint.json": "file:///home/sean/containers/apps/actions-runner/metadata.yaml"
+    "files.associations": {
+        "*.json5": "jsonc"
     }
 }
