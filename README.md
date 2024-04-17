@@ -6,5 +6,5 @@ Get-ChildItem -Recurse -Filter *.sh | ForEach-Object { git update-index --chmod=
 ```
 
 ```bash
-find . -type f -name "*.sh" -exec git update-index --chmod=+x {} \;
+find . -type f -name "*.sh" -exec chmod +x {} \;
 ```
