@@ -1,9 +1,9 @@
 ---
 app: plandex
 channels:
-  - name: beta
+  - name: stable
     platforms: ["linux/amd64"]
-    stable: false
+    stable: true
     tests:
       enabled: true
       type: cli
