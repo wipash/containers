@@ -36,7 +36,10 @@ RUN \
     git \
     jq \
     libcap \
+    libpcap \
+    libpcap-dev \
     libturbojpeg \
+    libjpeg-turbo \
     libstdc++ \
     libxslt \
     mariadb-connector-c \
