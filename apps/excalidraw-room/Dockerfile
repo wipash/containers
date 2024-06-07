@@ -23,7 +23,7 @@ RUN git clone "https://github.com/excalidraw/excalidraw.git" . && \
 
 RUN yarn build:app:docker
 
-FROM ghcr.io/nginxinc/nginx-unprivileged:1.26-alpine
+FROM ghcr.io/nginxinc/nginx-unprivileged:1.27-alpine
 
 ENV COLLAB_ADDR=http://localhost:3002
 
