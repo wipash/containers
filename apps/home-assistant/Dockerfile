@@ -23,85 +23,90 @@ WORKDIR /app
 #hadolint ignore=DL3018,DL3013,DL3059,DL4006
 RUN \
     apk add --no-cache \
-    bash \
-    bluez \
-    bluez-deprecated \
-    bluez-libs \
-    ca-certificates \
-    catatonit \
-    cups-libs \
-    curl \
-    eudev-libs \
-    ffmpeg \
-    git \
-    jq \
-    libcap \
-    libpcap \
-    libpcap-dev \
-    libturbojpeg \
-    libjpeg-turbo \
-    libstdc++ \
-    libxslt \
-    mariadb-connector-c \
-    mariadb-connector-c-dev \
-    nano \
-    openssh-client \
-    openssl \
-    postgresql-libs \
-    socat \
-    tiff \
-    tzdata \
-    unzip \
+        bash \
+        bluez \
+        bluez-deprecated \
+        bluez-libs \
+        ca-certificates \
+        catatonit \
+        cups-libs \
+        curl \
+        eudev-libs \
+        ffmpeg \
+        git \
+        jq \
+        libcap \
+        libturbojpeg \
+        libjpeg-turbo \
+        libstdc++ \
+        libxslt \
+        mariadb-connector-c \
+        mariadb-connector-c-dev \
+        nano \
+        openssh-client \
+        openssl \
+        postgresql-libs \
+        socat \
+        tiff \
+        tzdata \
+        unzip \
     && \
     apk add --no-cache --virtual=.build-deps \
-    autoconf \
-    build-base \
-    cargo \
-    cmake \
-    cups-dev \
-    eudev-dev \
-    ffmpeg-dev \
-    glib-dev \
-    jpeg-dev \
-    libffi-dev \
-    libxml2-dev \
-    libxslt-dev \
-    postgresql-dev \
-    unixodbc-dev \
+        autoconf \
+        build-base \
+        cargo \
+        cmake \
+        cups-dev \
+        eudev-dev \
+        ffmpeg-dev \
+        glib-dev \
+        jpeg-dev \
+        libffi-dev \
+        libxml2-dev \
+        libxslt-dev \
+        postgresql-dev \
+        unixodbc-dev \
     && \
     pip install uv \
     && \
     curl -fsSL "https://github.com/home-assistant/core/archive/${VERSION}.tar.gz" \
-    | tar xzf - -C /tmp --strip-components=1 \
+        | tar xzf - -C /tmp --strip-components=1 \
     && \
     case "${TARGETPLATFORM}" in \
-    'linux/amd64') \
-    export ARCH='amd64'; \
-    ;; \
-    'linux/arm64') \
-    export ARCH='aarch64'; \
-    ;; \
+        'linux/amd64') \
+            export ARCH='amd64'; \
+        ;; \
+        'linux/arm64') \
+            export ARCH='aarch64'; \
+        ;; \
     esac \
     && \
     HOME_ASSISTANT_BASE=$(curl -fsSL "https://raw.githubusercontent.com/home-assistant/core/${VERSION}/build.yaml" | grep "${ARCH}: " | cut -d ":" -f3) \
     && \
     uv pip install --system --only-binary=:all: --find-links "${HOMEASSISTANT_WHEELS}" \
-    --requirement "https://raw.githubusercontent.com/home-assistant/docker/${HOME_ASSISTANT_BASE}/requirements.txt" \
+        --requirement "https://raw.githubusercontent.com/home-assistant/docker/${HOME_ASSISTANT_BASE}/requirements.txt" \
     && \
     uv pip install --system --only-binary=:all: --find-links "${HOMEASSISTANT_WHEELS}" \
-    --requirement /tmp/requirements_all.txt \
+        --requirement /tmp/requirements_all.txt \
     && \
     uv pip install --system --only-binary=:all: --find-links "${HOMEASSISTANT_WHEELS}" \
-    homeassistant=="${VERSION}" \
+        homeassistant=="${VERSION}" \
+    && \
+    mkdir -p /config \
+    && chown nobody:nogroup -R /config \
     && \
     apk del --purge .build-deps \
     && \
     rm -rf \
-    /root/.cache \
-    /root/.cargo \
-    /tmp/*
+        /root/.cache \
+        /root/.cargo \
+        /tmp/*
 
 COPY ./apps/home-assistant/entrypoint.sh /entrypoint.sh
+
+USER nobody:nogroup
+WORKDIR /config
+VOLUME ["/config"]
 
 ENTRYPOINT ["/usr/bin/catatonit", "--"]
 CMD ["/entrypoint.sh"]
