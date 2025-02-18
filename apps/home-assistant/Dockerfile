@@ -13,7 +13,8 @@ ENV \
     PIP_BREAK_SYSTEM_PACKAGES=1 \
     UV_SYSTEM_PYTHON=true \
     UV_NO_CACHE=true \
-    CRYPTOGRAPHY_DONT_BUILD_RUST=1 \ HOMEASSISTANT_WHEELS="https://wheels.home-assistant.io/musllinux/" \
+    CRYPTOGRAPHY_DONT_BUILD_RUST=1 \ 
+    HOMEASSISTANT_WHEELS="https://wheels.home-assistant.io/musllinux/" \
     HOME="/config" \
     VENV_FOLDER="/config/.venv"
     
