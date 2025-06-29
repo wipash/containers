@@ -32,13 +32,13 @@ ENV PHP_OPCACHE_ENABLE=1
 
 # Install runtime dependencies and PHP extensions
 RUN install-php-extensions intl && \
-    apk add --no-cache nginx supervisor dos2unix
+    apk add --no-cache nginx supervisor dos2unix nodejs yarn
 
 WORKDIR /app
 
 # Copy application files from builder stage
 COPY --from=builder /src/backend /app/backend
-COPY --from=builder /src/frontend/dist /app/frontend/dist
+COPY --from=builder /src/frontend /app/frontend
 COPY --from=builder /src/docker/all-in-one/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /src/docker/all-in-one/supervisor/supervisord.conf /etc/supervisord.conf
 COPY --from=builder /src/docker/all-in-one/scripts/startup.sh /startup.sh
@@ -55,7 +55,7 @@ RUN mkdir -p /app/backend/bootstrap/cache \
 # Make startup script executable
 RUN dos2unix /startup.sh && chmod +x /startup.sh
 
-EXPOSE 80
+EXPOSE 5678
 
 WORKDIR /app
 
