@@ -1,5 +1,5 @@
 # Stage 1: Build assets and dependencies
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 ARG VERSION
 ARG TARGETPLATFORM
