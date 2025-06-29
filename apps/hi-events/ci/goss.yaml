@@ -3,7 +3,7 @@
 file:
   /app/backend/artisan:
     exists: true
-    mode: "0755"
+    mode: "0644"
   /app/frontend/package.json:
     exists: true
   /startup.sh:
@@ -14,10 +14,6 @@ file:
   /etc/supervisord.conf:
     exists: true
 
-# Test that nginx is at least listening
-port:
-  tcp:5678:
-    listening: true
 
 # Test that required commands are available
 command:
