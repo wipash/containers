@@ -10,7 +10,7 @@ RUN apk add --no-cache git yarn php php-intl php-dom composer
 # Clone the repository
 WORKDIR /src
 RUN git clone https://github.com/HiEventsDev/Hi.Events.git . \
-    && if [ -n "$VERSION" ]; then git checkout $VERSION; fi
+    && if [ -n "$VERSION" ]; then git checkout "v${VERSION}"; fi
 
 # Build the frontend
 WORKDIR /src/frontend
