@@ -39,9 +39,9 @@ WORKDIR /app
 # Copy application files from builder stage
 COPY --from=builder /src/backend /app/backend
 COPY --from=builder /src/frontend /app/frontend
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY supervisord.conf /etc/supervisord.conf
-COPY startup.sh /startup.sh
+COPY ./apps/hi-events/nginx.conf /etc/nginx/nginx.conf
+COPY ./apps/hi-events/supervisord.conf /etc/supervisord.conf
+COPY ./apps/hi-events/startup.sh /startup.sh
 
 # Set up directories and permissions
 RUN mkdir -p /app/backend/bootstrap/cache \
