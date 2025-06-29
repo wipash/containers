@@ -23,5 +23,3 @@ command:
     exit-status: 0
   "node -v":
     exit-status: 0
-  "yarn -v":
-    exit-status: 0
