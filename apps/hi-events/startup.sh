@@ -13,7 +13,7 @@ php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
-php artisan storage:link
+# php artisan storage:link
 
 # chown -R www-data:www-data /app/backend
 # chmod -R 775 /app/backend/storage /app/backend/bootstrap/cache
