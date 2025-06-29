@@ -5,7 +5,7 @@ ARG VERSION
 ARG TARGETPLATFORM
 
 # Install build dependencies
-RUN apk add --no-cache git yarn php php-intl composer
+RUN apk add --no-cache git yarn php php-intl php-dom composer
 
 # Clone the repository
 WORKDIR /src
@@ -21,7 +21,7 @@ WORKDIR /src/backend
 RUN composer install --ignore-platform-reqs --no-interaction --no-dev --optimize-autoloader --prefer-dist
 
 # Stage 2: Final image
-FROM serversideup/php:8.3-fpm-alpine
+FROM serversideup/php:beta-8.3.2-fpm-alpine
 
 ARG VERSION
 ARG TARGETPLATFORM
