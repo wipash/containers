@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "jinja2",
+#     "packaging",
+#     "pyyaml",
+#     "requests",
+# ]
+# ///
 import importlib.util
 import sys
 import os
