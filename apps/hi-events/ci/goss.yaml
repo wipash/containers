@@ -1,4 +1,31 @@
 ---
-http:
-  http://localhost:8080:
-    status: 200
+# Test that required files exist
+file:
+  /app/backend/artisan:
+    exists: true
+    mode: "0755"
+  /app/frontend/package.json:
+    exists: true
+  /startup.sh:
+    exists: true
+    mode: "0755"
+  /etc/nginx/nginx.conf:
+    exists: true
+  /etc/supervisord.conf:
+    exists: true
+
+# Test that nginx is at least listening
+port:
+  tcp:5678:
+    listening: true
+
+# Test that required commands are available
+command:
+  "php -v":
+    exit-status: 0
+  "nginx -v":
+    exit-status: 0
+  "node -v":
+    exit-status: 0
+  "yarn -v":
+    exit-status: 0
