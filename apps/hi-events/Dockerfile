@@ -63,6 +63,6 @@ EXPOSE 5678
 
 WORKDIR /app
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/startup.sh"]
