@@ -42,7 +42,6 @@ COPY --from=builder /src/frontend /app/frontend
 COPY ./apps/hi-events/nginx.conf /etc/nginx/nginx.conf
 COPY ./apps/hi-events/supervisord.conf /etc/supervisord.conf
 COPY ./apps/hi-events/startup.sh /startup.sh
-COPY ./apps/hi-events/entrypoint.sh /entrypoint.sh
 
 # Set up directories and permissions
 RUN mkdir -p /app/backend/bootstrap/cache \
@@ -54,15 +53,12 @@ RUN mkdir -p /app/backend/bootstrap/cache \
     && chmod -R 755 /app/backend/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
 
 # Make startup script executable
-RUN dos2unix /startup.sh && chmod +x /startup.sh && \
-    dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
+RUN dos2unix /startup.sh && chmod +x /startup.sh
 
 USER www-data
 
 EXPOSE 5678
 
 WORKDIR /app
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/startup.sh"]
