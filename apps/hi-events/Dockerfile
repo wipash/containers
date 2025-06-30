@@ -57,7 +57,7 @@ RUN dos2unix /startup.sh && chmod +x /startup.sh
 
 USER www-data
 
-EXPOSE 5678
+EXPOSE 8080
 
 WORKDIR /app
 
