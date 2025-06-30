@@ -1,4 +1,17 @@
 #!/bin/sh
+set -e
+
+echo "--- Preparing runtime directories and permissions ---"
+mkdir -p /var/lib/nginx/logs
+mkdir -p /var/lib/nginx/tmp
+
+chown -R www-data:www-data \
+  /app/backend/storage \
+  /app/backend/bootstrap/cache \
+  /var/lib/nginx \
+  /var/run \
+  /home/www-data
+
 
 cd /app/backend
 
@@ -13,9 +26,9 @@ php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
-# php artisan storage:link
 
-# chown -R www-data:www-data /app/backend
-# chmod -R 775 /app/backend/storage /app/backend/bootstrap/cache
+echo "Caching Laravel configuration for production..."
+php artisan config:cache
+php artisan route:cache
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf
