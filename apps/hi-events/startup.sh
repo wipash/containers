@@ -20,8 +20,8 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-echo "Caching Laravel configuration for production..."
-php artisan config:cache
-php artisan route:cache
+# echo "Caching Laravel configuration for production..."
+# php artisan config:cache
+# php artisan route:cache
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf
