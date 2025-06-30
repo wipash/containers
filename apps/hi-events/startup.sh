@@ -1,12 +1,18 @@
 #!/bin/sh
-set -e
-
 echo "--- Preparing runtime directories ---"
 mkdir -p /var/lib/nginx/logs
 mkdir -p /var/lib/nginx/tmp
 
+echo "Initializing Laravel storage directories..."
+mkdir -p /app/backend/storage/app/public
+mkdir -p /app/backend/storage/framework/cache/data
+mkdir -p /app/backend/storage/framework/sessions
+mkdir -p /app/backend/storage/framework/testing
+mkdir -p /app/backend/storage/framework/views
+mkdir -p /app/backend/storage/logs
 
-cd /app/backend
+
+cd /app/backend || exit 1
 
 if ! php artisan migrate --force; then
     echo "============================================"
@@ -15,13 +21,14 @@ if ! php artisan migrate --force; then
     echo "============================================"
 fi
 
+echo "Clearing and caching Laravel configuration..."
+
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-# echo "Caching Laravel configuration for production..."
-# php artisan config:cache
-# php artisan route:cache
+php artisan config:cache
+php artisan route:cache
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf
