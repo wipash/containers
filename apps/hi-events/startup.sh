@@ -1,16 +1,9 @@
 #!/bin/sh
 set -e
 
-echo "--- Preparing runtime directories and permissions ---"
+echo "--- Preparing runtime directories ---"
 mkdir -p /var/lib/nginx/logs
 mkdir -p /var/lib/nginx/tmp
-
-chown -R www-data:www-data \
-  /app/backend/storage \
-  /app/backend/bootstrap/cache \
-  /var/lib/nginx \
-  /var/run \
-  /home/www-data
 
 
 cd /app/backend
