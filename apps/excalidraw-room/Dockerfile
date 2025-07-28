@@ -1,4 +1,4 @@
-FROM node:20 AS builder
+FROM node:22 AS builder
 
 ARG TARGETPLATFORM
 ARG VERSION
@@ -13,13 +13,15 @@ ENV VITE_APP_PORTAL_URL=""
 ENV VITE_APP_DISABLE_TRACKING=true
 ENV VITE_APP_WS_SERVER_URL=http://localhost:3002
 
-RUN git clone "https://github.com/excalidraw/excalidraw.git" . && \
+RUN --mount=type=cache,target=/root/.cache/yarn \
+  git clone "https://github.com/excalidraw/excalidraw.git" . && \
   if [ -n "$VERSION" ]; then \
     git checkout v$VERSION; \
   fi  && \
-  sed -i 's|"excalidraw.production.min": "./entry.js",|"excalidraw.production.min": "../../excalidraw-app/index.ts",|g' ./src/packages/excalidraw/webpack.prod.config.js && \
-  sed -i 's|simpleanalyticscdn.com|localhost|g'  ./index.html && \
-  yarn --ignore-optional --network-timeout 600000
+  sed -i 's|simpleanalyticscdn.com|localhost|g' ./excalidraw-app/index.html && \
+    # Add the maximumFileSizeToCacheInBytes to the workbox configuration to make it build
+  sed -i '/workbox: {/a\          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB' ./excalidraw-app/vite.config.mts && \
+  yarn --network-timeout 600000
 
 RUN yarn build:app:docker
 
@@ -31,7 +33,7 @@ WORKDIR /usr/share/nginx/html
 
 USER root
 
-COPY --from=builder /tmp/node_app/build /usr/share/nginx/html
+COPY --from=builder /tmp/node_app/excalidraw-app/build /usr/share/nginx/html
 
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
