@@ -57,6 +57,21 @@ jobs:
         with:
           token: "${{ steps.app-token.outputs.token }}"
 
+      ## Debug
+      - name: Show apps tree
+        run: |
+          ls -la
+          ls -la ./apps || true
+          find ./apps -maxdepth 3 -type f \( -name "metadata.yaml" -o -name "metadata.json" -o -name "latest.py" -o -name "latest.sh" \) -print || true
+
+      - name: Verify metadata files exist
+        run: |
+          set -x
+          test -d ./apps
+          count=$(find ./apps -type f -name "metadata.yaml" -o -name "metadata.json" | wc -l)
+          echo "Found $count metadata files"
+          find ./apps -type f -name "latest.py" -o -name "latest.sh" -maxdepth 3 -print
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
