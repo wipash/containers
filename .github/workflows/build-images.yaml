@@ -73,7 +73,7 @@ jobs:
           find ./apps -type f -name "latest.py" -o -name "latest.sh" -maxdepth 3 -print
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.x
           cache: pip
